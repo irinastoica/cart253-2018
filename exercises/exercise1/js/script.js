@@ -117,10 +117,8 @@ function draw() {
   // Start ball image exactly where the mouse is
    ballImageX = mouseX;
    ballImageY = mouseY;
-   ballImage.height = 200;
-   ballImage.width = 201;
-  // Display the clown image
-  image(ballImage,ballImageX,ballImageY);
+  // Display the ball image and make it the size 50px50px
+  image(ballImage,ballImageX,ballImageY,50,50);
 
   // Move the dog image right by increasing its x position
   dogImageX += 1;
