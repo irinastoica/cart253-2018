@@ -10,7 +10,7 @@ Starter code for exercise 2.
 // The position and size of our avatar circle
 var avatarX;
 var avatarY;
-var avatarSize = 50;
+var avatarSize = 70;
 
 // The speed and velocity of our avatar circle
 var avatarSpeed = 10;
@@ -20,19 +20,33 @@ var avatarVY = 0;
 // The position and size of the enemy circle
 var enemyX;
 var enemyY;
-var enemySize = 50;
+var enemySize = 150;
 // How much bigger the enemy circle gets with each successful dodge
-var enemySizeIncrease = 5;
+var enemySizeIncrease = 10;
 
 // The speed and velocity of our enemy circle
 var enemySpeed = 5;
 var enemyVX = 5;
 // How much bigger the enemy circle gets with each successful dodge
 var enemySpeedIncrease = 0.5;
+// The dodges counter font
+var font1;
+// When you fail font
+var font2;
 
 // How many dodges the player has made
 var dodges = 0;
 
+// The background image of the canvas
+var backgroundImage;
+// loading the images
+function preload() {
+backgroundImage = loadImage("assets/images/background.png");
+birdImage = loadImage("assets/images/bird.png");
+batImage = loadImage("assets/images/bat.png");
+font1 = loadFont("assets/fonts/MontserratAlternates-Black.otf")
+font2 = loadFont("assets/fonts/MontserratAlternates-Light.otf")
+}
 // setup()
 //
 // Make the canvas, position the avatar and anemy
@@ -57,8 +71,10 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A green background
-  background(206,223,154);
+  // the background image
+  background(backgroundImage);
+  // the text color
+  fill(225,245,176);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -91,10 +107,10 @@ function draw() {
     textSize(15);
     textAlign(RIGHT);
     textStyle(BOLD);
-    text("DODGES:", 420,25);
-    textFont('Helvetica');
+    text("YOUR SCORE:", 420,25);
+    textFont(font1);
     //color of the text
-    fill(52,115,33);
+    fill(255,255,255);
     textAlign(CENTER);
     text(dodgeText,440,25);
 
@@ -118,7 +134,7 @@ function draw() {
     enemyX = 0;
     enemyY = random(0,height);
     // Reset the enemy's size and speed
-    enemySize = 50;
+    enemySize = 150;
     enemySpeed = 5;
     // Reset the avatar's position
     avatarX = width/2;
@@ -158,14 +174,10 @@ function draw() {
   // Display the current number of successful in the console
   console.log(dodges);
 
-  // The player is black
-  fill(0);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+  image(birdImage,avatarX,avatarY,avatarSize,avatarSize);
 
-  // The enemy is red
-  fill(255,0,0);
-  // Draw the enemy as a circle
-  ellipse(enemyX,enemyY,enemySize,enemySize);
+  // Display the enemy as the bat
+  image(batImage,enemyX,enemyY,enemySize,enemySize);
 
 }
