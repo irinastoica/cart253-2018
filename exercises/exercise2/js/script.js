@@ -57,8 +57,8 @@ function setup() {
 // Handle moving the avatar and enemy and checking for dodges and
 // game over situations.
 function draw() {
-  // A pink background
-  background(255,220,220);
+  // A green background
+  background(206,223,154);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -83,6 +83,21 @@ function draw() {
   else if (keyIsDown(DOWN_ARROW)) {
     avatarVY = avatarSpeed;
   }
+
+
+    var dodgeText= dodges
+
+    // Display the number of dodges
+    textSize(15);
+    textAlign(RIGHT);
+    textStyle(BOLD);
+    text("DODGES:", 420,25);
+    textFont('Helvetica');
+    //color of the text
+    fill(52,115,33);
+    textAlign(CENTER);
+    text(dodgeText,440,25);
+
 
   // Move the avatar according to its calculated velocity
   avatarX = avatarX + avatarVX;
@@ -110,6 +125,7 @@ function draw() {
     avatarY = height/2;
     // Reset the dodge counter
     dodges = 0;
+
   }
 
   // Check if the avatar has gone off the screen (cheating!)
