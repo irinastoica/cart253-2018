@@ -100,6 +100,14 @@ function draw() {
     avatarVY = avatarSpeed;
   }
 
+  // if dodges = 0, "try again"
+if (dodges === 0){
+  fill(248,221,129,256-enemyX)
+  textSize(40);
+  text("Try Again",width/2,height/2);
+  textFont (font2)
+}
+
 
     var dodgeText= dodges
 
