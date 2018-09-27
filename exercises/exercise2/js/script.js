@@ -10,7 +10,7 @@ Starter code for exercise 2.
 // The position and size of our avatar circle
 var avatarX;
 var avatarY;
-var avatarSize = 70;
+var avatarSize = 50;
 
 // The speed and velocity of our avatar circle
 var avatarSpeed = 10;
@@ -188,4 +188,20 @@ if (dodges === 0){
   // Display the enemy as the bat
   image(batImage,enemyX,enemyY,enemySize,enemySize);
 
-}
+  // if the the played dodged 10 times display the
+     if (dodges >= 10)
+     {
+       // the background changes
+       background(248,221,129);
+       // Put the specifications for the win message text
+       textFont(font2);
+       textSize(45);
+       textAlign(CENTER);
+       text("You won!",width/2, height/2);
+       // ni more movement
+       birdImage.display();
+       batImage.display();
+       avatarSpeed = 0;
+       enemySpeed = 0;
+    }
+  }
