@@ -126,7 +126,16 @@ function draw() {
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
   }
-}
+  //draw rectangle in top right corner
+      fill(97,174,76);
+      rect(width-240,2,220,150);
+      //draw doggo inside rectangle
+      image(targetImage,width-100,50);
+      //find the dog text
+      fill(243,231,45);
+      textSize(28);
+      text('WANTED !!',width-200,120);
+      }
 
 // mousePressed()
 //
