@@ -14,6 +14,13 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 var targetX;
 var targetY;
 var targetImage;
+var targetSize;
+
+
+// The dog moves randomly when the game is over
+var targetImageSpeed;
+var targetImageVX;
+
 
 // The ten decoy images
 var decoyImage1;
@@ -34,6 +41,18 @@ var numDecoys = 100;
 // Keep track of whether they've won
 var gameOver = false;
 
+//Loads the target image in the image
+var targetImage;
+var targetImageX;
+var targetImageY;
+
+// Loads a rectangle interface at the top right corner of the screen
+var poster;
+var posterX;
+var posterY;
+var posterW;
+var posterH;
+
 // preload()
 //
 // Loads the target and decoy images before the program starts
@@ -50,6 +69,8 @@ function preload() {
   decoyImage8 = loadImage("assets/images/animals-08.png");
   decoyImage9 = loadImage("assets/images/animals-09.png");
   decoyImage10 = loadImage("assets/images/animals-10.png");
+
+
 }
 
 // setup()
@@ -103,40 +124,78 @@ function setup() {
     }
   }
 
+  //Preparing the size of the poster
+  posterX = width - 201;
+  posterY = 0;
+  posterW = 200;
+  posterH = 300;
+
+
   // Once we've displayed all decoys, we choose a location for the target
   targetX = random(0,width);
   targetY = random(0,height);
+  targetSize = random(25,100);
+
+  // dog not going underneath the poster
+  while (targetX>posterX && targetY< posterY+posterH) {
+    targetX = random(0,width);
+    targetY = random(0,height);
+  }
+
   // And draw it (this means it will always be on top)
-  image(targetImage,targetX,targetY);
+  image(targetImage,targetX,targetY,targetSize);
+
 }
 
 function draw() {
+  //DRAWING THE POSTER SIZING AND COLOR
+  fill(34,94,27);
+  rect(posterX,posterY, posterW,posterH);
+  image(targetImage,posterX + posterW /2,posterY + posterH/2,posterW/2,posterH/2);
+
+  // Position of the FIND ME text
+  textSize(20);
+  fill(243,231,45);
+  textAlign(CENTER);
+  text("FIND ME!",posterX + posterW /2,posterY + posterH/2+50);
+
+
+
+
   if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
-    textSize(128);
+    textSize(80);
     textAlign(CENTER,CENTER);
     noStroke();
     fill(random(255));
+    background(random(0, 200), random(0, 200), random(0, 200));
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
+    text("YAY YOU FOUND ME!",width/2,height/2);
 
     noFill();
     stroke(random(255));
     strokeWeight(10);
     ellipse(targetX,targetY,targetImage.width,targetImage.height);
-  }
-  //draw rectangle in top right corner
-      fill(97,174,76);
-      rect(width-240,2,220,150);
-      //draw doggo inside rectangle
-      image(targetImage,width-100,50);
-      //find the dog text
-      fill(243,231,45);
-      textSize(28);
-      text('WANTED !!',width-200,120);
-      }
 
+    //The dog popping up
+    targetImageX = random(0,width);
+    targetImageY = random(0,height);
+
+    // The variation of speed of the dogs appearing
+    targetImageSpeed = random(5,200);
+    targetImageVX = random(5,300);
+    targetSize = random(2,100);
+
+    // The speed of the dog
+    targetImageVX = targetImageSpeed;
+    targetImageX = targetImageX + targetImageVX;
+    targetImageY = targetImageY + targetImageVX;
+
+    image(targetImage,targetImageX,targetImageY);
+
+  }
+}
 // mousePressed()
 //
 // Checks if the player clicked on the target and if so tells them they won
