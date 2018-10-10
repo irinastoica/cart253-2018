@@ -43,12 +43,19 @@ var preyFill = 200;
 var eatHealth = 10;
 // Number of prey eaten during the game
 var preyEaten = 0;
+// The background image of the canvas
+var backgroundImage;
 
+// loading the images
+function preload() {
+backgroundImage = loadImage("assets/images/background.jpg");
+}
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
-  createCanvas(500,500);
+  createCanvas(windowWidth,windowHeight);
+  background(0);
 
   noStroke();
 
@@ -84,7 +91,8 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100,100,200);
+  // the background image
+  background(backgroundImage);
 
   if (!gameOver) {
     handleInput();
