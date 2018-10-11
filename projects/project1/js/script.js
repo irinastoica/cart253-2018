@@ -38,7 +38,7 @@ var snitchY;
 var snitchRadius = 25;
 var snitchVX;
 var snitchVY;
-var snitchMaxSpeed = 4;
+var snitchMaxSpeed = 2;
 var snitchNormalSpeed = 1;
 // snitch health
 var snitchHealth;
@@ -54,12 +54,12 @@ var snitchEaten = 0;
 var backgroundImage;
 //  shift option
 var pressShift = false;
+// level up
+var levelUp;
 
 var healthBar;
 // game sound
 var gameSound;
-// winning sound
-var winSound;
 
 
 // loading the images
@@ -69,7 +69,6 @@ harryImage = loadImage("assets/images/harry-potter.png");
 snitchImage = loadImage("assets/images/golden-snitch.png");
 font1 = loadFont("assets/fonts/harry-potter.ttf");
 gameSound = new Audio("assets/sounds/harrypotter.mp3");
-winSound = new Audio("assets/sounds/catch.mp3");
 }
 // setup()
 //
@@ -224,7 +223,7 @@ function updateHealth() {
   }
 }
 
-// checkEating()
+// ()
 //
 // Check if the harry overlaps the snitch and updates health of both
 function checkEating() {
@@ -239,13 +238,17 @@ function checkEating() {
 
     // Check if the snitch died
     if (snitchHealth === 0) {
-      // Move the "new" snitch to a random position
-      snitchX = random(0,width);
-      snitchY = random(0,height);
-      // Give it full health
-      snitchHealth = snitchMaxHealth;
-      // Track how many snitch were eaten
-      snitchEaten++;
+      if (levelUp == 0){
+          snitchNormalSpeed -= 2;
+        }
+        //increase player playerMaxSpeed
+        if (levelUp == 1){
+          snitchMaxSpeed+=10;
+        }
+        // Give it full health
+        snitchHealth = snitchMaxHealth;
+        // Track how many prey were eaten
+        snitchEaten++;
     }
   }
 }
