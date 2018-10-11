@@ -19,7 +19,7 @@ var playerY;
 var playerRadius = 25;
 var playerVX = 0;
 var playerVY = 0;
-var playerMaxSpeed = 2;
+var playerMaxSpeed = 10;
 // Player health
 var playerHealth;
 var playerMaxHealth = 255;
@@ -35,7 +35,7 @@ var preyVY;
 var preyMaxSpeed = 4;
 // Prey health
 var preyHealth;
-var preyMaxHealth = 100;
+var preyMaxHealth = 150;
 // Prey fill color
 var preyFill = 200;
 
@@ -49,6 +49,8 @@ var backgroundImage;
 // loading the images
 function preload() {
 backgroundImage = loadImage("assets/images/background.jpg");
+playerImage = loadImage("assets/images/harry-potter.png");
+preyImage = loadImage("assets/images/golden-snitch.png");
 }
 // setup()
 //
@@ -243,16 +245,14 @@ function movePrey() {
 //
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
-  fill(preyFill,preyHealth);
-  ellipse(preyX,preyY,preyRadius*2);
+  image(preyImage, preyX, preyY);
 }
 
 // drawPlayer()
 //
 // Draw the player as an ellipse with alpha based on health
 function drawPlayer() {
-  fill(playerFill,playerHealth);
-  ellipse(playerX,playerY,playerRadius*2);
+    image(playerImage, playerX, playerY);
 }
 
 // showGameOver()
