@@ -25,6 +25,7 @@ var harryRadius = 25;
 var harryVX = 0;
 var harryVY = 0;
 var harryMaxSpeed = 55;
+var harryNormalSpeed = 1;
 // harry health
 var harryHealth;
 var harryMaxHealth = 555;
@@ -38,11 +39,12 @@ var snitchRadius = 25;
 var snitchVX;
 var snitchVY;
 var snitchMaxSpeed = 4;
+var snitchNormalSpeed = 1;
 // snitch health
 var snitchHealth;
 var snitchMaxHealth = 150;
 // snitch fill color
-var snitchFill = 200;
+
 
 // Amount of health obtained per frame of "eating" the snitch
 var eatHealth = 10;
@@ -54,13 +56,20 @@ var backgroundImage;
 var pressShift = false;
 
 var healthBar;
+// game sound
+var gameSound;
+// winning sound
+var winSound;
+
 
 // loading the images
 function preload() {
 backgroundImage = loadImage("assets/images/background.jpg");
 harryImage = loadImage("assets/images/harry-potter.png");
 snitchImage = loadImage("assets/images/golden-snitch.png");
-font1 = loadFont("assets/fonts/harry-potter.ttf")
+font1 = loadFont("assets/fonts/harry-potter.ttf");
+gameSound = new Audio("assets/sounds/harrypotter.mp3");
+winSound = new Audio("assets/sounds/catch.mp3");
 }
 // setup()
 //
@@ -70,9 +79,11 @@ function setup() {
   background(0);
 
   noStroke();
-
   setupsnitch();
   setupharry();
+  //setup the game song
+  gameSound.loop =  true;
+  gameSound.play();
 }
 
 // setupsnitch()
@@ -288,6 +299,7 @@ function drawharry() {
 //
 // Display text about the game being over!
 function showGameOver() {
+  gameSound.pause();
   textSize(60);
   textAlign(CENTER,CENTER);
   fill(243,231,45);
