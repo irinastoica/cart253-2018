@@ -12,45 +12,50 @@ sprinting, random movement, screen wrap.
 
 // Track whether the game is over
 var gameOver = false;
+//time varrable for snitch;
+var tx = 0;
+var ty = 0;
+//noise varriable for snitch;
+var nx = 0;
+var ny = 0;
+// harry position, size, velocity
+var harryX;
+var harryY;
+var harryRadius = 25;
+var harryVX = 0;
+var harryVY = 0;
+var harryMaxSpeed = 10;
+// harry health
+var harryHealth;
+var harryMaxHealth = 255;
+// harry fill color
+var harryFill = 50;
 
-// Player position, size, velocity
-var playerX;
-var playerY;
-var playerRadius = 25;
-var playerVX = 0;
-var playerVY = 0;
-var playerMaxSpeed = 10;
-// Player health
-var playerHealth;
-var playerMaxHealth = 255;
-// Player fill color
-var playerFill = 50;
+// snitch position, size, velocity
+var snitchX;
+var snitchY;
+var snitchRadius = 25;
+var snitchVX;
+var snitchVY;
+var snitchMaxSpeed = 4;
+// snitch health
+var snitchHealth;
+var snitchMaxHealth = 150;
+// snitch fill color
+var snitchFill = 200;
 
-// Prey position, size, velocity
-var preyX;
-var preyY;
-var preyRadius = 25;
-var preyVX;
-var preyVY;
-var preyMaxSpeed = 4;
-// Prey health
-var preyHealth;
-var preyMaxHealth = 150;
-// Prey fill color
-var preyFill = 200;
-
-// Amount of health obtained per frame of "eating" the prey
+// Amount of health obtained per frame of "eating" the snitch
 var eatHealth = 10;
-// Number of prey eaten during the game
-var preyEaten = 0;
+// Number of snitch eaten during the game
+var snitchEaten = 0;
 // The background image of the canvas
 var backgroundImage;
 
 // loading the images
 function preload() {
 backgroundImage = loadImage("assets/images/background.jpg");
-playerImage = loadImage("assets/images/harry-potter.png");
-preyImage = loadImage("assets/images/golden-snitch.png");
+harryImage = loadImage("assets/images/harry-potter.png");
+snitchImage = loadImage("assets/images/golden-snitch.png");
 }
 // setup()
 //
@@ -61,34 +66,34 @@ function setup() {
 
   noStroke();
 
-  setupPrey();
-  setupPlayer();
+  setupsnitch();
+  setupharry();
 }
 
-// setupPrey()
+// setupsnitch()
 //
-// Initialises prey's position, velocity, and health
-function setupPrey() {
-  preyX = width/5;
-  preyY = height/2;
-  preyVX = -preyMaxSpeed;
-  preyVY = preyMaxSpeed;
-  preyHealth = preyMaxHealth;
+// Initialises snitch's position, velocity, and health
+function setupsnitch() {
+  snitchX = width/5;
+  snitchY = height/2;
+  snitchVX = -snitchMaxSpeed;
+  snitchVY = snitchMaxSpeed;
+  snitchHealth = snitchMaxHealth;
 }
 
-// setupPlayer()
+// setupharry()
 //
-// Initialises player position and health
-function setupPlayer() {
-  playerX = 4*width/5;
-  playerY = height/2;
-  playerHealth = playerMaxHealth;
+// Initialises harry position and health
+function setupharry() {
+  harryX = 4*width/5;
+  harryY = height/2;
+  harryHealth = harryMaxHealth;
 }
 
 // draw()
 //
 // While the game is active, checks input
-// updates positions of prey and player,
+// updates positions of snitch and harry,
 // checks health (dying), checks eating (overlaps)
 // displays the two agents.
 // When the game is over, shows the game over screen.
@@ -99,14 +104,14 @@ function draw() {
   if (!gameOver) {
     handleInput();
 
-    movePlayer();
-    movePrey();
+    moveharry();
+    movesnitch();
 
     updateHealth();
     checkEating();
 
-    drawPrey();
-    drawPlayer();
+    drawsnitch();
+    drawharry();
   }
   else {
     showGameOver();
@@ -115,65 +120,65 @@ function draw() {
 
 // handleInput()
 //
-// Checks arrow keys and adjusts player velocity accordingly
+// Checks arrow keys and adjusts harry velocity accordingly
 function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
-    playerVX = -playerMaxSpeed;
+    harryVX = -harryMaxSpeed;
   }
   else if (keyIsDown(RIGHT_ARROW)) {
-    playerVX = playerMaxSpeed;
+    harryVX = harryMaxSpeed;
   }
   else {
-    playerVX = 0;
+    harryVX = 0;
   }
 
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
-    playerVY = -playerMaxSpeed;
+    harryVY = -harryMaxSpeed;
   }
   else if (keyIsDown(DOWN_ARROW)) {
-    playerVY = playerMaxSpeed;
+    harryVY = harryMaxSpeed;
   }
   else {
-    playerVY = 0;
+    harryVY = 0;
   }
 }
 
-// movePlayer()
+// moveharry()
 //
-// Updates player position based on velocity,
+// Updates harry position based on velocity,
 // wraps around the edges.
-function movePlayer() {
+function moveharry() {
   // Update position
-  playerX += playerVX;
-  playerY += playerVY;
+  harryX += harryVX;
+  harryY += harryVY;
 
-  // Wrap when player goes off the canvas
-  if (playerX < 0) {
-    playerX += width;
+  // Wrap when harry goes off the canvas
+  if (harryX < 0) {
+    harryX += width;
   }
-  else if (playerX > width) {
-    playerX -= width;
+  else if (harryX > width) {
+    harryX -= width;
   }
 
-  if (playerY < 0) {
-    playerY += height;
+  if (harryY < 0) {
+    harryY += height;
   }
-  else if (playerY > height) {
-    playerY -= height;
+  else if (harryY > height) {
+    harryY -= height;
   }
 }
 
 // updateHealth()
 //
-// Reduce the player's health (every frame)
-// Check if the player is dead
+// Reduce the harry's health (every frame)
+// Check if the harry is dead
 function updateHealth() {
-  // Reduce player health, constrain to reasonable range
-  playerHealth = constrain(playerHealth - 0.5,0,playerMaxHealth);
-  // Check if the player is dead
-  if (playerHealth === 0) {
+  // Reduce harry health, constrain to reasonable range
+  harryHealth = constrain(harryHealth - 0.5,0,harryMaxHealth);
+  // Check if the harry is dead
+  if (harryHealth === 0) {
     // If so, the game is over
     gameOver = true;
   }
@@ -181,78 +186,74 @@ function updateHealth() {
 
 // checkEating()
 //
-// Check if the player overlaps the prey and updates health of both
+// Check if the harry overlaps the snitch and updates health of both
 function checkEating() {
-  // Get distance of player to prey
-  var d = dist(playerX,playerY,preyX,preyY);
+  // Get distance of harry to snitch
+  var d = dist(harryX,harryY,snitchX,snitchY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
-    // Increase the player health
-    playerHealth = constrain(playerHealth + eatHealth,0,playerMaxHealth);
-    // Reduce the prey health
-    preyHealth = constrain(preyHealth - eatHealth,0,preyMaxHealth);
+  if (d < harryRadius + snitchRadius) {
+    // Increase the harry health
+    harryHealth = constrain(harryHealth + eatHealth,0,harryMaxHealth);
+    // Reduce the snitch health
+    snitchHealth = constrain(snitchHealth - eatHealth,0,snitchMaxHealth);
 
-    // Check if the prey died
-    if (preyHealth === 0) {
-      // Move the "new" prey to a random position
-      preyX = random(0,width);
-      preyY = random(0,height);
+    // Check if the snitch died
+    if (snitchHealth === 0) {
+      // Move the "new" snitch to a random position
+      snitchX = random(0,width);
+      snitchY = random(0,height);
       // Give it full health
-      preyHealth = preyMaxHealth;
-      // Track how many prey were eaten
-      preyEaten++;
+      snitchHealth = snitchMaxHealth;
+      // Track how many snitch were eaten
+      snitchEaten++;
     }
   }
 }
 
-// movePrey()
+// movesnitch()
 //
-// Moves the prey based on random velocity changes
-function movePrey() {
-  // Change the prey's velocity at random intervals
-  // random() will be < 0.05 5% of the time, so the prey
-  // will change direction on 5% of frames
-  if (random() < 0.05) {
-    // Set velocity based on random values to get a new direction
-    // and speed of movement
-    // Use map() to convert from the 0-1 range of the random() function
-    // to the appropriate range of velocities for the prey
-    preyVX = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
-    preyVY = map(random(),0,1,-preyMaxSpeed,preyMaxSpeed);
-  }
+// Moves the snitch based on random velocity changes
+function movesnitch() {
+  //noise time values
+    tx = tx + .005;
+    ty = ty + .015;
+    nx = noise(tx);
+    ny = noise(ty);
+    //map noise to correspond to snitch XY velocity
+    snitchVX = map(nx,0,1,-snitchMaxSpeed,snitchMaxSpeed);
+    snitchVY = map(ny,0,1,-snitchMaxSpeed,snitchMaxSpeed);
 
-  // Update prey position based on velocity
-  preyX += preyVX;
-  preyY += preyVY;
-
+  // Update snitch position based on velocity
+  snitchX += snitchVX;
+  snitchY += snitchVY;
   // Screen wrapping
-  if (preyX < 0) {
-    preyX += width;
+  if (snitchX < 0) {
+    snitchX += width;
   }
-  else if (preyX > width) {
-    preyX -= width;
+  else if (snitchX > width) {
+    snitchX -= width;
   }
 
-  if (preyY < 0) {
-    preyY += height;
+  if (snitchY < 0) {
+    snitchY += height;
   }
-  else if (preyY > height) {
-    preyY -= height;
+  else if (snitchY > height) {
+    snitchY -= height;
   }
 }
 
-// drawPrey()
+// drawsnitch()
 //
-// Draw the prey as an ellipse with alpha based on health
-function drawPrey() {
-  image(preyImage, preyX, preyY);
+// Draw the snitch as an ellipse with alpha based on health
+function drawsnitch() {
+  image(snitchImage, snitchX, snitchY);
 }
 
-// drawPlayer()
+// drawharry()
 //
-// Draw the player as an ellipse with alpha based on health
-function drawPlayer() {
-    image(playerImage, playerX, playerY);
+// Draw the harry as an ellipse with alpha based on health
+function drawharry() {
+    image(harryImage, harryX, harryY);
 }
 
 // showGameOver()
@@ -263,7 +264,7 @@ function showGameOver() {
   textAlign(CENTER,CENTER);
   fill(0);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + preyEaten + " prey\n";
+  gameOverText += "You ate " + snitchEaten + " snitch\n";
   gameOverText += "before you died."
   text(gameOverText,width/2,height/2);
 }
