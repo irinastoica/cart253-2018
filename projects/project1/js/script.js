@@ -24,14 +24,12 @@ var harryY;
 var harryRadius = 25;
 var harryVX = 0;
 var harryVY = 0;
-var harryMaxSpeed = 10;
+var harryMaxSpeed = 55;
 // harry health
 var harryHealth;
-var harryMaxHealth = 255;
+var harryMaxHealth = 555;
 // harry image
 var harryImage;
-//dying speed for harry
-var dyingSpeed = 0.5;
 
 // snitch position, size, velocity
 var snitchX;
@@ -54,6 +52,8 @@ var snitchEaten = 0;
 var backgroundImage;
 //  shift option
 var pressShift = false;
+
+var healthBar;
 
 // loading the images
 function preload() {
@@ -117,7 +117,9 @@ function draw() {
 
     drawsnitch();
     drawharry();
-    console.log(pressShift);
+
+     drawHealthBar();
+
   }
   else {
     showGameOver();
@@ -286,11 +288,33 @@ function drawharry() {
 //
 // Display text about the game being over!
 function showGameOver() {
-  textSize(32);
+  textSize(60);
   textAlign(CENTER,CENTER);
-  fill(0);
+  fill(243,231,45);
   var gameOverText = "GAME OVER\n";
-  gameOverText += "You ate " + snitchEaten + " snitch\n";
+  gameOverText += "You caught " + snitchEaten + " snitch\n";
   gameOverText += "before you died."
   text(gameOverText,width/2,height/2);
+}
+
+
+// Draws a energy1 bar at the bottom
+function drawHealthBar(){
+  push();
+  rectMode(CORNER);
+  //background rectangle of health bar
+  fill(64,43,112);
+  rect(0,height-50,width/1 + 10,30);
+  //The health bar
+  fill(153, 153, 255);
+  healthBar = map(harryHealth,0,harryMaxHealth, 0, width);
+  rect(0, height-50,healthBar,30);
+  //Text showing the Energy level
+  textFont ("Helvetica")
+  fill(64,43,112);
+  textSize(15);
+  textAlign(CENTER,CENTER);
+  var energyText = "ENERGY LEFT";
+  text(energyText,width/2,height-35);
+  pop();
 }
