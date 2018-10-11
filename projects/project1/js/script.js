@@ -28,8 +28,10 @@ var harryMaxSpeed = 10;
 // harry health
 var harryHealth;
 var harryMaxHealth = 255;
-// harry fill color
-var harryFill = 50;
+// harry image
+var harryImage;
+//dying speed for harry
+var dyingSpeed = 0.5;
 
 // snitch position, size, velocity
 var snitchX;
@@ -50,12 +52,15 @@ var eatHealth = 10;
 var snitchEaten = 0;
 // The background image of the canvas
 var backgroundImage;
+//  shift option
+var pressShift = false;
 
 // loading the images
 function preload() {
 backgroundImage = loadImage("assets/images/background.jpg");
 harryImage = loadImage("assets/images/harry-potter.png");
 snitchImage = loadImage("assets/images/golden-snitch.png");
+font1 = loadFont("assets/fonts/harry-potter.ttf")
 }
 // setup()
 //
@@ -112,6 +117,7 @@ function draw() {
 
     drawsnitch();
     drawharry();
+    console.log(pressShift);
   }
   else {
     showGameOver();
@@ -122,6 +128,27 @@ function draw() {
 //
 // Checks arrow keys and adjusts harry velocity accordingly
 function handleInput() {
+  textAlign(CENTER,CENTER);
+  textFont(font1);
+  textSize(40);
+  noStroke();
+  fill(248,231,45);
+  text("PRESS SHIFT TO GO FASTER, BUT LOSE MORE ENERGY",width/2,height/10);
+  //sprint function
+  if (keyIsDown(SHIFT)) {
+    //shift will allow the harry ot acelerate at a cost of health
+    // Press shift advice
+
+
+harryMaxSpeed = harryMaxSpeed + 0.2;
+//subtract 1.2 health per everyframe shift is held
+harryHealth = harryHealth - 1.2;
+  }
+  // reset speed when shift is released/if it is not pressed
+  else {
+    harryMaxSpeed = 2;
+  }
+
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
     harryVX = -harryMaxSpeed;
@@ -211,7 +238,6 @@ function checkEating() {
 }
 
 // movesnitch()
-//
 // Moves the snitch based on random velocity changes
 function movesnitch() {
   //noise time values
