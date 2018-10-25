@@ -31,7 +31,7 @@ Ball.prototype.updated = function () {
   this.y = constrain(this.y,0,height-this.size);
 
   // Check for touching upper or lower edge and reverse velocity if so
-  if (this.y = 0 || this.y + this.size === height) {
+  if (this.y === 0 || this.y + this.size === height) {
     this.vy = -this.vy;
   }
 }
@@ -60,11 +60,11 @@ Ball.prototype.display = function () {
 }
 
 // handleCollision(paddle)
-//
+//.
 // Check if this ball overlaps the paddle passed as an argument
 // and if so reverse x velocity to bounce
   ///////FIXED
-Ball.prototype.handleCollision = function (paddle) {
+Ball.prototype.handleCollision = function(paddle) {
   // Check if the ball overlaps the paddle on x axis
   if (this.x + this.size > paddle.x && this.x < paddle.x + paddle.w) {
     // Check if the ball overlaps the paddle on y axis
