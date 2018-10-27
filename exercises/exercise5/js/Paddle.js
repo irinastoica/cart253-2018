@@ -6,7 +6,7 @@
 // Paddle constructor
 //
 // Sets the properties with the provided arguments or defaults
-function Paddle(x,y,w,h,speed,downKey,upKey) {
+function Paddle(x,y,w,h,speed,downKey,upKey,leftKey,rightKey) {
   this.x = x;
   this.y = y;
   this.vx = 0;
@@ -16,6 +16,25 @@ function Paddle(x,y,w,h,speed,downKey,upKey) {
   this.speed = speed;
   this.downKey = downKey;
   this.upKey = upKey;
+  this.upScore = false;
+  // the starting score is 0
+
+  Paddle
+    .prototype
+    .updateScore = function () {
+    if (this.gainScore === true) {
+        this.score ++;
+        this.gainScore = false;
+    }
+    textAlign(RIGHT);
+    fill(255);
+    textSize(15);
+    text('YOUR SCORE    ' + leftPaddle.score, 200, 40);
+    text('YOUR SCORE    ' + rightPaddle.score, width - 80, 40);
+}
+  this.score = 0;
+  this.leftKey = leftKey;
+  this.rightKey = rightKey;
 }
 
 // handleInput()
@@ -48,4 +67,16 @@ Paddle.prototype.update = function() {
 Paddle.prototype.display = function() {
   fill(255);
   rect(this.x,this.y,this.w,this.h);
+}
+// keep the score of the paddles
+Paddle.prototype.updateScore = function () {
+    if (this.upScore === true) {
+        this.score ++;
+        this.upScore = false;
+    }
+    fill(255);
+    textSize(30);
+    textAlign(left);
+    text('Score    ' + leftPaddle.score, 60, 35);
+    text('Score    ' + rightPaddle.score, width - 60, 35);
 }

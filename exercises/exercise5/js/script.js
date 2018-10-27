@@ -18,7 +18,7 @@ var rightPaddle;
 //
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(1200,800);
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
@@ -44,7 +44,13 @@ function draw() {
 
   if (ball.isOffScreen()) {
     ball.reset();
+    leftPaddle.ballOffScreenUpdate();
+    rightPaddle.ballOffScreenUpdate();
+    console.log(leftPaddle.score, rightPaddle.score);
   }
+  // update the score
+  leftPaddle.updateScore();
+  rightPaddle.updateScore();
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);

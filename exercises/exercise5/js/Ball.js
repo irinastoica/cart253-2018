@@ -41,13 +41,23 @@ Ball.prototype.update = function () {
 // Otherwise it returns false.
 Ball.prototype.isOffScreen = function () {
   // Check for going off screen and reset if so
-  if (this.x + this.size < 0 || this.x > width) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
+  // display which paddle won
+  if (this
+         .x + this
+         .size < 0 || this
+         .x > width) {
+         if (this.x + this.size < 0) {
+             leftPaddle.upScore = false;
+             rightPaddle.upcore = true;
+         } else {
+             rightPaddle.upScore = false;
+             leftPaddle.upScore = true;
+         }
+         return true;
+     } else {
+         return false;
+     }
+ }
 
 // display()
 //
