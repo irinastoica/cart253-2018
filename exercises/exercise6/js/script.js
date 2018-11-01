@@ -53,7 +53,10 @@ function draw() {
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
-
+   // FIXED
+  push();
+  fill(255);
+  pop();
   ball.display();
   leftPaddle.display();
   // FIXED
