@@ -30,7 +30,7 @@ function Paddle(x,y,w,h,speed,downKey,upKey,leftKey,rightKey) {
     fill(255);
     textSize(15);
     text('YOUR SCORE    ' + leftPaddle.score, 200, 40);
-    text('YOUR SCORE    ' + rightPaddle.score, width - 80, 40);
+    text('YOUR SCORE    ' + rightPaddle.score, width - 60, 40);
 }
   this.score = 0;
   this.leftKey = leftKey;
