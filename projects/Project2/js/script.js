@@ -1,5 +1,6 @@
 // Basic OO Pong
-// by Pippin Barr
+// code by Irina Stoica
+// base code by Pippin Barr
 //
 // A primitive implementation of Pong with no scoring system
 // just the ability to play the game with the keyboard.
@@ -13,12 +14,23 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+// The background image of the canvas
+var backgroundImage;
+// The background image at the beggining of the game
+var titleImage;
 
+// preload()
+function preload() {
+backgroundImage = loadImage("assets/images/background.jpg");
+titleBackground = loadImage("assets/images/title-background.jpg");
+
+}
 // setup()
 //
+
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(1000,597);
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
@@ -33,7 +45,7 @@ function setup() {
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0);
+  background(backgroundImage);
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
