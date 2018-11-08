@@ -13,12 +13,18 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
+// The background image of the canvas
+var backgroundImage;
 
-// setup()
-//
+// loading the images
+function preload() {
+  backgroundImage = loadImage("assets/images/background.jpg");
+  dinoLeft = loadImage("assets/images/dinoleft.png");
+
+}
 // Creates the ball and paddles
 function setup() {
-  createCanvas(640,480);
+  createCanvas(windowWidth, windowHeight);
   // Create a ball
   ball = new Ball(width/2,height/2,5,5,10,5);
   // Create the right paddle with UP and DOWN as controls
@@ -27,13 +33,18 @@ function setup() {
   // Keycodes 83 and 87 are W and S respectively
   leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
 }
+function windowResized() {
+  // take the full size of the window
+  resizeCanvas(window.innerWidth, window.innerHeight);
+}
 
 // draw()
 //
 // Handles input, updates all the elements, checks for collisions
 // and displays everything.
 function draw() {
-  background(0);
+  // the background image
+  background(backgroundImage);
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
@@ -52,4 +63,9 @@ function draw() {
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
+}
+
+
+function drawdino1() {
+  image(dinoLeft, dinoLeftX, dinoLeftY);
 }
