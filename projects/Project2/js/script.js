@@ -9,7 +9,7 @@ var rightPaddle;
 ////// the states of the game //////
 var state = "Title";
 // the sound of the ball hitting the paddles
-var jurrasic;
+var jurrasicSound;
 // ambience music of the whole game
 var jurrasicMain;
 
@@ -19,7 +19,7 @@ function preload(){
 // Load fonts
   jurassicFont = loadFont("assets/fonts/jurassic.ttf");
   //Load Sounds
-  jurassic = new Audio ("assets/sounds/jurrasic.mp3");
+  jurrasicSound = new Audio ("assets/sounds/jurrasic.wav");
   jurrasicMain = new Audio ("assets/sounds/jurrasic-theme.wav");
 }
 
@@ -88,6 +88,13 @@ function displayGame() {
   rightPaddle.update();
 
   if (ball.isOffScreen()) {
+    // Check which side of the screen earn the points
+    if (ball.x + ball.size < 0) {
+       leftPaddle.score++;
+     }
+    if (ball.x > width) {
+         rightPaddle.score++;
+       }
     ball.reset();
   }
 
