@@ -6,14 +6,21 @@
 var ball;
 var leftPaddle;
 var rightPaddle;
-////// NEW //////
+////// the states of the game //////
 var state = "Title";
+// the sound of the ball hitting the paddles
+var jurrasic;
+// ambience music of the whole game
+var jurrasicMain;
 
 function preload(){
   backgroundImage = loadImage("assets/images/background.jpg");
   titleBackground = loadImage("assets/images/title-background.jpg");
 // Load fonts
   jurassicFont = loadFont("assets/fonts/jurassic.ttf");
+  //Load Sounds
+  jurassic = new Audio ("assets/sounds/jurrasic.mp3");
+  jurrasicMain = new Audio ("assets/sounds/jurrasic-theme.wav");
 }
 
 // setup()
@@ -61,7 +68,7 @@ function displayTitle() {
   fill(255)
   text("Jurrasic World", width/2, 250);
   textFont('Georgia');
-  textSize(30);
+  textSize(28  );
   text("You need to reach 10 in order to win. Good luck! ",width/2, 350);
   textSize(30);
   text("CLICK THE SPACE BAR TO START! ",width/2,500);
@@ -72,7 +79,7 @@ function displayTitle() {
 }
 
 function displayGame() {
-
+  jurrasicMain.play();
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
