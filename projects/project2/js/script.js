@@ -15,10 +15,13 @@ var leftPaddle;
 var rightPaddle;
 // The background image of the canvas
 var backgroundImage;
+// The background image of the beginning of the game
+var titleBackground;
 
 // loading the images
 function preload() {
   backgroundImage = loadImage("assets/images/background.jpg");
+  titleBackground = loadImage("assets/images/title-background.jpg");
 
 }
 // Creates the ball and paddles
@@ -31,6 +34,8 @@ createCanvas(1000, 597);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
    leftPaddle = new Paddle(0, height / 2, 10, 60, 10, 83, 87, 0);
+   // UP_ARROW to start DOWN_ARROW to restart after game over.
+   title = new Title(true, false);
 }
 
 
