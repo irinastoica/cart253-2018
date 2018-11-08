@@ -1,43 +1,34 @@
-// Basic OO Pong
-// code by Irina Stoica
-// base code by Pippin Barr
-//
-// A primitive implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
-//
-// Arrow keys control the right hand paddle, W and S control
-// the left hand paddle.
-//
-// Written with JavaScript OOP.
+// The jurrasic World
+// by Irina Stoica
+
 
 // Variable to contain the objects representing our ball and paddles
 var ball;
 var leftPaddle;
 var rightPaddle;
-// The background image of the canvas
-var backgroundImage;
-// The background image at the beggining of the game
-var titleImage;
+////// NEW //////
+var state = "Title";
 
-// preload()
-function preload() {
-backgroundImage = loadImage("assets/images/background.jpg");
-titleBackground = loadImage("assets/images/title-background.jpg");
-
+function preload(){
+  backgroundImage = loadImage("assets/images/background.jpg");
+  titleBackground = loadImage("assets/images/title-background.jpg");
+// Load fonts
+  jurassicFont = loadFont("assets/fonts/jurassic.ttf");
 }
+
 // setup()
 //
-
 // Creates the ball and paddles
 function setup() {
-  createCanvas(1000,597);
+  createCanvas(1000, 597);
   // Create a ball
-  ball = new Ball(width/2,height/2,5,5,10,5);
+  ball = new Ball(width / 2, height / 2, 5, 5, 10, 5, 15);
   // Create the right paddle with UP and DOWN as controls
-  rightPaddle = new Paddle(width-10,height/2,10,60,10,DOWN_ARROW,UP_ARROW);
+  rightPaddle = new Paddle(width - 10, height / 2, 10, 60, 15, DOWN_ARROW, UP_ARROW, 0);
   // Create the left paddle with W and S as controls
   // Keycodes 83 and 87 are W and S respectively
-  leftPaddle = new Paddle(0,height/2,10,60,10,83,87);
+  leftPaddle = new Paddle(0, height / 2, 10, 60, 15, 83, 87, 0);
+
 }
 
 // draw()
@@ -46,6 +37,41 @@ function setup() {
 // and displays everything.
 function draw() {
   background(backgroundImage);
+
+  console.log(state);
+  switch (state) {
+
+    case "Title":
+      displayTitle();
+      break;
+
+    case "GAME":
+      displayGame();
+      break;
+  }
+
+}
+////// NEW //////
+function displayTitle() {
+
+  textFont(jurassicFont);
+  textAlign(CENTER, CENTER)
+  background(titleBackground);
+  textSize(200);
+  fill(255)
+  text("Jurrasic World", width/2, 250);
+  textFont('Georgia');
+  textSize(30);
+  text("You need to reach 10 in order to win. Good luck! ",width/2, 350);
+  textSize(30);
+  text("CLICK THE SPACE BAR TO START! ",width/2,500);
+  if (keyIsPressed && key === ' ') {
+    // If the space bar is pressed, the draw function will change to the draw one
+    state = "GAME";
+  }
+}
+
+function displayGame() {
 
   leftPaddle.handleInput();
   rightPaddle.handleInput();
