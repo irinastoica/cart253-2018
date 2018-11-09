@@ -69,3 +69,6 @@ Paddle.prototype.leftScore = function () {
   text("Your Score:",650,30);
   text(leftPaddle.score,850,30);
 }
+Paddle.prototype.scoreReset = function(){
+  this.score -= this.score;
+}

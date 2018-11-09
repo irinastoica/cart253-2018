@@ -155,7 +155,7 @@ function displayGameOver() {
     push();
     textSize(40);
     textFont('Georgia');
-    text("Red T-Rex Won", width/2, height/1.7);
+    text("Player 1 Won", width/2, height/1.7);
     textSize(16  );
     text("Press the SPACE BAR to reset the game", width / 2, height /1.5);
     pop();
@@ -173,13 +173,15 @@ function displayGameOver() {
     push();
     textSize(40);
     textFont('Georgia');
-    text("Blue T-Rex Won", width/2, height/1.7);
+    text("Player 2 Won", width/2, height/1.7);
     textSize(16  );
     text("Press the SPACE BAR to reset the game", width / 2, height /1.5);
     pop();
+}
+  // press the SPACE bar
     if (keyIsPressed && key === ' ') {
-      // If the space bar is pressed, restart the gmae
-      state = "GAME";
-    }
+    rightPaddle.scoreReset();
+    leftPaddle.scoreReset();
+    state = "GAME";
   }
 }
