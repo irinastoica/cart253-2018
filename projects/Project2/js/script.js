@@ -13,6 +13,9 @@ var jurrasicSound;
 // ambience music of the whole game
 var jurrasicMain;
 
+// var bbArrayL = [];
+// var bbArrayR = [];
+
 function preload(){
   backgroundImage = loadImage("assets/images/background.jpg");
   titleBackground = loadImage("assets/images/title-background.jpg");
@@ -80,6 +83,7 @@ function displayTitle() {
 
 function displayGame() {
   jurrasicMain.play();
+
   leftPaddle.handleInput();
   rightPaddle.handleInput();
 
@@ -89,19 +93,33 @@ function displayGame() {
 
   if (ball.isOffScreen()) {
     // Check which side of the screen earn the points
+    // give the points to the left side
     if (ball.x + ball.size < 0) {
-       leftPaddle.score++;
-     }
+      leftPaddle.score++;
+    }
+// give the points to the right side
     if (ball.x > width) {
-         rightPaddle.score++;
-       }
+      rightPaddle.score++;
+    }
     ball.reset();
   }
+
 
   ball.handleCollision(leftPaddle);
   ball.handleCollision(rightPaddle);
 
   ball.display();
+
   leftPaddle.display();
   rightPaddle.display();
+
+// Display the score of the right paddle
+  if (rightPaddle.score >= 1) {
+    rightPaddle.rightScore();
+  }
+// the score of the left paddle
+  if (leftPaddle.score >= 1) {
+    leftPaddle.leftScore();
+  }
+
 }
