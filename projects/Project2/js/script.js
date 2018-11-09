@@ -13,17 +13,17 @@ var jurrasicSound;
 // ambience music of the whole game
 var jurrasicMain;
 
-// var bbArrayL = [];
-// var bbArrayR = [];
 
 function preload(){
   backgroundImage = loadImage("assets/images/background.jpg");
   titleBackground = loadImage("assets/images/title-background.jpg");
+  endBackground = loadImage("assets/images/end-background.jpg");
 // Load fonts
   jurassicFont = loadFont("assets/fonts/jurassic.ttf");
   //Load Sounds
   jurrasicSound = new Audio ("assets/sounds/jurrasic.wav");
   jurrasicMain = new Audio ("assets/sounds/jurrasic-theme.wav");
+  redTrex = loadImage("assets/images/redtrex.png");
 }
 
 // setup()
@@ -58,8 +58,11 @@ function draw() {
     case "GAME":
       displayGame();
       break;
-  }
 
+    case "GAME OVER":
+      displayGameOver();
+      break;
+  }
 }
 ////// NEW //////
 function displayTitle() {
@@ -122,4 +125,61 @@ function displayGame() {
     leftPaddle.leftScore();
   }
 
+  // score 10 to win the game
+if (rightPaddle.score === 10 || leftPaddle.score === 10) {
+  state = "GAME OVER";
+}
+
+
+}
+
+// game over function
+function displayGameOver() {
+  background(endBackground);
+
+  if (rightPaddle.score >= 10) {
+    rightPaddle.rightScore();
+  }
+
+  if (leftPaddle.score >= 10) {
+    leftPaddle.leftScore();
+  }
+
+  textAlign(CENTER, CENTER);
+
+  if (rightPaddle.score === 10) {
+    textSize(250);
+    textFont(jurassicFont);
+    fill(255)
+    text("GAME OVER", width/2, 240);
+    push();
+    textSize(40);
+    textFont('Georgia');
+    text("Red T-Rex Won", width/2, height/1.7);
+    textSize(16  );
+    text("Press the SPACE BAR to reset the game", width / 2, height /1.5);
+    pop();
+    if (keyIsPressed && key === ' ') {
+      // If the space bar is pressed, restart the gmae
+      state = "GAME";
+    }
+
+  }
+  if (leftPaddle.score === 10) {
+    textSize(250);
+    textFont(jurassicFont);
+    fill(255)
+    text("GAME OVER", width/2, 240);
+    push();
+    textSize(40);
+    textFont('Georgia');
+    text("Blue T-Rex Won", width/2, height/1.7);
+    textSize(16  );
+    text("Press the SPACE BAR to reset the game", width / 2, height /1.5);
+    pop();
+    if (keyIsPressed && key === ' ') {
+      // If the space bar is pressed, restart the gmae
+      state = "GAME";
+    }
+  }
 }
