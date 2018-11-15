@@ -1,18 +1,16 @@
-var angleX = 0.0;
-var angleY = 0.0;
+// This is a basic Brick-Breaker game
+// The game is over when all the bricks are destroyed, or when the ball is dropped.
+// Code by Irina Stoica
+
+var paddle;
+
 function setup() {
-  createCanvas(500,500,WEBGL);
+  createCanvas(700,800)
+  paddle = new Paddle();
 }
+
 function draw() {
-  background(0);
-  rotateY(angleY);
-  fill(254,247,2);
-  box(60);
-  translate(50,0,50); // Translation in 3D!
-  rotateX(angleX);
-  box(30);
-  angleX += 0.01;
-  angleY -= 0.01;
-  box(10);
-  translate(30,0,30);
+  background(0)
+  paddle.display()
+
 }
